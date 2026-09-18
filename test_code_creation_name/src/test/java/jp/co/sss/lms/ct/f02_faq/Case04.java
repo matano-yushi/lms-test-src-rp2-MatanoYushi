@@ -23,6 +23,8 @@ public class Case04 {
 
 	private String detail = "http://localhost:8080/lms/attendance/detail";
 
+	private String login = "http://localhost:8080/lms/";
+
 	/** 前処理 */
 	@BeforeAll
 	static void before() {
@@ -39,7 +41,7 @@ public class Case04 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		webDriver.get("http://localhost:8080/lms/");
+		goTo(login);
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 		getEvidence(new Object() {
 		}, "");
@@ -49,7 +51,7 @@ public class Case04 {
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		webDriver.get("http://localhost:8080/lms/");
+		goTo(login);
 
 		webDriver.findElement(By.name("loginId")).sendKeys("StudentAA01");
 		webDriver.findElement(By.name("password")).sendKeys("Pomupomupurin416");
@@ -80,7 +82,7 @@ public class Case04 {
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
 
-		webDriver.get("http://localhost:8080/lms/");
+		goTo(login);
 		webDriver.findElement(By.linkText("よくあるご質問")).click();
 
 		getEvidence(new Object() {
