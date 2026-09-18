@@ -54,7 +54,7 @@ public class Case03 {
 		webDriver.findElement(By.name("password")).sendKeys("Pomupomupurin416");
 
 		webDriver.findElement(By.className("btn-primary")).click();
-		assertEquals("コース詳細 | LMS", webDriver.getTitle());
+		assertEquals("http://localhost:8080/lms/course/detail", webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
 		}, "");
