@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f01_login1;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -36,6 +37,10 @@ public class Case03 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
+		webDriver.get("http://localhost:8080/lms/");
+		assertEquals("ログイン | LMS", webDriver.getTitle());
+		getEvidence(new Object() {
+		}, "");
 
 	}
 
@@ -46,7 +51,7 @@ public class Case03 {
 		webDriver.get("http://localhost:8080/lms/");
 
 		webDriver.findElement(By.name("loginId")).sendKeys("StudentAA01");
-		webDriver.findElement(By.name("password")).sendKeys("password");
+		webDriver.findElement(By.name("password")).sendKeys("Pomupomupurin416");
 
 		webDriver.findElement(By.className("btn-primary")).click();
 
