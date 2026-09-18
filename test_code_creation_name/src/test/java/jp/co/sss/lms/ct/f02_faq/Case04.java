@@ -21,7 +21,7 @@ import org.openqa.selenium.By;
 @DisplayName("ケース04 よくある質問画面への遷移")
 public class Case04 {
 
-	private String detail = "http://localhost:8080/lms/attendance/detail";
+	private String detail = "http://localhost:8080/lms/course/detail";
 
 	private String login = "http://localhost:8080/lms/";
 
@@ -57,7 +57,7 @@ public class Case04 {
 		webDriver.findElement(By.name("password")).sendKeys("Pomupomupurin416");
 
 		webDriver.findElement(By.className("btn-primary")).click();
-		assertEquals("コース詳細 | LMS", webDriver.getTitle());
+		assertEquals("http://localhost:8080/lms/course/detail", webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
 		}, "");
@@ -81,6 +81,8 @@ public class Case04 {
 	@Order(4)
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
+		goTo(login);
+		String originalWindowString = webDriver.getWindowHandle();
 
 		goTo(login);
 		webDriver.findElement(By.linkText("よくあるご質問")).click();
