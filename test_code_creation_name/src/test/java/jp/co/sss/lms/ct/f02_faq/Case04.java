@@ -21,6 +21,8 @@ import org.openqa.selenium.By;
 @DisplayName("ケース04 よくある質問画面への遷移")
 public class Case04 {
 
+	private String detail = "http://localhost:8080/lms/attendance/detail";
+
 	/** 前処理 */
 	@BeforeAll
 	static void before() {
@@ -63,14 +65,26 @@ public class Case04 {
 	@Order(3)
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
-		// TODO ここに追加
+
+		goTo(detail);
+		webDriver.findElement(By.className("dropdown-toggle")).click();
+		webDriver.findElement(By.linkText("ヘルプ")).click();
+		assertEquals("ヘルプ | LMS", webDriver.getTitle());
+
+		getEvidence(new Object() {
+		}, "");
 	}
 
 	@Test
 	@Order(4)
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
-		// TODO ここに追加
+
+		webDriver.get("http://localhost:8080/lms/");
+		webDriver.findElement(By.linkText("よくあるご質問")).click();
+
+		getEvidence(new Object() {
+		}, "");
 	}
 
 }
