@@ -13,7 +13,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 /**
  * 結合テスト ログイン機能①
  * ケース01
- * @author holy
+ * @author 俣野宥士
  */
 @TestMethodOrder(OrderAnnotation.class)
 @DisplayName("ケース01 ログイン画面への遷移")
@@ -35,7 +35,11 @@ public class Case01 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
+
+		webDriver.get("http://localhost:8080/lms/");
+		getEvidence(new Object() {
+		}, "");
+
 	}
 
 }
