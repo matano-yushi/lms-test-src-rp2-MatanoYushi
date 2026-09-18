@@ -10,6 +10,7 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
 
 /**
  * 結合テスト よくある質問機能
@@ -46,7 +47,16 @@ public class Case04 {
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		// TODO ここに追加
+		webDriver.get("http://localhost:8080/lms/");
+
+		webDriver.findElement(By.name("loginId")).sendKeys("StudentAA01");
+		webDriver.findElement(By.name("password")).sendKeys("Pomupomupurin416");
+
+		webDriver.findElement(By.className("btn-primary")).click();
+		assertEquals("コース詳細 | LMS", webDriver.getTitle());
+
+		getEvidence(new Object() {
+		}, "");
 	}
 
 	@Test
