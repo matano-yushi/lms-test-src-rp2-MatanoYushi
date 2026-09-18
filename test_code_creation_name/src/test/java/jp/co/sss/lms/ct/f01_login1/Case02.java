@@ -38,6 +38,9 @@ public class Case02 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		webDriver.get("http://localhost:8080/lms/");
+		getEvidence(new Object() {
+		}, "");
+
 	}
 
 	@Test
