@@ -13,7 +13,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 /**
  * 結合テスト よくある質問機能
  * ケース04
- * @author holy
+ * @author 俣野宥士
  */
 @TestMethodOrder(OrderAnnotation.class)
 @DisplayName("ケース04 よくある質問画面への遷移")
