@@ -83,9 +83,13 @@ public class Case04 {
 	void test04() {
 		goTo(login);
 		String originalWindowString = webDriver.getWindowHandle();
-
-		goTo(login);
 		webDriver.findElement(By.linkText("よくあるご質問")).click();
+
+		for (String windowHandle : webDriver.getWindowHandles()) {
+			if (!originalWindowString.contentEquals(windowHandle)) {
+				webDriver.switchTo().window(windowHandle);
+			}
+		}
 
 		getEvidence(new Object() {
 		}, "");
