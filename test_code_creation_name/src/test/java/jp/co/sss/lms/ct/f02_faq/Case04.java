@@ -84,7 +84,7 @@ public class Case04 {
 	void test04() {
 
 		String originalWindowString = webDriver.getWindowHandle();
-		webDriver.findElement(By.linkText("よくある質問")).sendKeys(org.openqa.selenium.Keys.ENTER);
+		webDriver.findElement(By.linkText("よくある質問")).click();
 		for (String windowHandle : webDriver.getWindowHandles()) {
 			if (!originalWindowString.contentEquals(windowHandle)) {
 
