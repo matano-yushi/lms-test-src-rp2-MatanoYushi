@@ -85,12 +85,9 @@ public class Case04 {
 
 		String originalWindowString = webDriver.getWindowHandle();
 		webDriver.findElement(By.linkText("よくある質問")).sendKeys(org.openqa.selenium.Keys.ENTER);
-
-		//現在ブラウザで開いているすべてのタブ（IDのリスト）を1つずつ取り出して
-		//windowHandle に代入しながらループ処理
 		for (String windowHandle : webDriver.getWindowHandles()) {
 			if (!originalWindowString.contentEquals(windowHandle)) {
-				//switchTo：操作対象の「切り替え機能」
+
 				webDriver.switchTo().window(windowHandle);
 				break;
 			}
