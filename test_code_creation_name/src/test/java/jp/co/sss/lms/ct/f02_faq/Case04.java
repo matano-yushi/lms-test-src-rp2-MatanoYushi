@@ -25,6 +25,8 @@ public class Case04 {
 
 	private String login = "http://localhost:8080/lms/";
 
+	private String faq = "http://localhost:8080/lms/faq";
+
 	/** 前処理 */
 	@BeforeAll
 	static void before() {
@@ -57,7 +59,7 @@ public class Case04 {
 		webDriver.findElement(By.name("password")).sendKeys("Pomupomupurin416");
 
 		webDriver.findElement(By.className("btn-primary")).click();
-		assertEquals("http://localhost:8080/lms/course/detail", webDriver.getCurrentUrl());
+		assertEquals(detail, webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
 		}, "");
@@ -81,15 +83,23 @@ public class Case04 {
 	@Order(4)
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
-		goTo(login);
-		String originalWindowString = webDriver.getWindowHandle();
-		webDriver.findElement(By.linkText("よくあるご質問")).click();
 
+		webDriver.findElement(By.cssSelector("button.navbar-btn")).click();
+		String originalWindowString = webDriver.getWindowHandle();
+
+		visibilityTimeout(By.linkText("よくあるご質問"), 5);
+		webDriver.findElement(By.linkText("よくあるご質問")).sendKeys(org.openqa.selenium.Keys.ENTER);
+
+		//現在ブラウザで開いているすべてのタブ（IDのリスト）を1つずつ取り出して
+		//windowHandle に代入しながらループ処理
 		for (String windowHandle : webDriver.getWindowHandles()) {
 			if (!originalWindowString.contentEquals(windowHandle)) {
+				//switchTo：操作対象の「切り替え機能」
 				webDriver.switchTo().window(windowHandle);
+				break;
 			}
 		}
+		assertEquals(faq, webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
 		}, "");
