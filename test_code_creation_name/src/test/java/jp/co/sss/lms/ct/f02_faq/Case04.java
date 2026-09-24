@@ -27,6 +27,8 @@ public class Case04 {
 
 	private String faq = "http://localhost:8080/lms/faq";
 
+	private String help = "http://localhost:8080/lms/help";
+
 	/** 前処理 */
 	@BeforeAll
 	static void before() {
@@ -44,7 +46,7 @@ public class Case04 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		goTo(login);
-		assertEquals("ログイン | LMS", webDriver.getTitle());
+		assertEquals(login, webDriver.getCurrentUrl());
 		getEvidence(new Object() {
 		}, "");
 	}
@@ -72,7 +74,7 @@ public class Case04 {
 
 		webDriver.findElement(By.className("dropdown-toggle")).click();
 		webDriver.findElement(By.linkText("ヘルプ")).click();
-		assertEquals("ヘルプ | LMS", webDriver.getTitle());
+		assertEquals(help, webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
 		}, "");

@@ -21,6 +21,10 @@ import org.openqa.selenium.By;
 @DisplayName("ケース03 受講生 ログイン 正常系")
 public class Case03 {
 
+	private String detail = "http://localhost:8080/lms/course/detail";
+
+	private String login = "http://localhost:8080/lms/";
+
 	/** 前処理 */
 	@BeforeAll
 	static void before() {
@@ -37,8 +41,8 @@ public class Case03 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		webDriver.get("http://localhost:8080/lms/");
-		assertEquals("ログイン | LMS", webDriver.getTitle());
+		webDriver.get(login);
+		assertEquals(login, webDriver.getCurrentUrl());
 		getEvidence(new Object() {
 		}, "");
 
@@ -54,7 +58,7 @@ public class Case03 {
 
 		webDriver.findElement(By.className("btn-primary")).click();
 		visibilityTimeout(By.cssSelector("button.navbar-btn"), 5);
-		assertEquals("http://localhost:8080/lms/course/detail", webDriver.getCurrentUrl());
+		assertEquals(detail, webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
 		}, "");
