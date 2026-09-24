@@ -59,6 +59,7 @@ public class Case04 {
 		webDriver.findElement(By.name("password")).sendKeys("Pomupomupurin416");
 
 		webDriver.findElement(By.className("btn-primary")).click();
+		visibilityTimeout(By.cssSelector("button.navbar-btn"), 5);
 		assertEquals(detail, webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
