@@ -53,7 +53,6 @@ public class Case04 {
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		goTo(login);
 
 		webDriver.findElement(By.name("loginId")).sendKeys("StudentAA01");
 		webDriver.findElement(By.name("password")).sendKeys("Pomupomupurin416");
@@ -71,7 +70,6 @@ public class Case04 {
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
 
-		goTo(detail);
 		webDriver.findElement(By.className("dropdown-toggle")).click();
 		webDriver.findElement(By.linkText("ヘルプ")).click();
 		assertEquals("ヘルプ | LMS", webDriver.getTitle());
@@ -85,11 +83,8 @@ public class Case04 {
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
 
-		webDriver.findElement(By.cssSelector("button.navbar-btn")).click();
 		String originalWindowString = webDriver.getWindowHandle();
-
-		visibilityTimeout(By.linkText("よくあるご質問"), 5);
-		webDriver.findElement(By.linkText("よくあるご質問")).sendKeys(org.openqa.selenium.Keys.ENTER);
+		webDriver.findElement(By.linkText("よくある質問")).sendKeys(org.openqa.selenium.Keys.ENTER);
 
 		//現在ブラウザで開いているすべてのタブ（IDのリスト）を1つずつ取り出して
 		//windowHandle に代入しながらループ処理
