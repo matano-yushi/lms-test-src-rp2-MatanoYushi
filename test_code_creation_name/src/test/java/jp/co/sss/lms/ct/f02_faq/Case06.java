@@ -46,9 +46,12 @@ public class Case06 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		goTo(login);
+		assertEquals("ログイン | LMS", webDriver.getTitle());
 		assertEquals(login, webDriver.getCurrentUrl());
+
 		getEvidence(new Object() {
 		}, "");
+
 	}
 
 	@Test
@@ -61,6 +64,8 @@ public class Case06 {
 
 		webDriver.findElement(By.className("btn-primary")).click();
 		visibilityTimeout(By.cssSelector("button.navbar-btn"), 5);
+
+		assertEquals("コース詳細 | LMS", webDriver.getTitle());
 		assertEquals(detail, webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
@@ -74,6 +79,7 @@ public class Case06 {
 
 		webDriver.findElement(By.className("dropdown-toggle")).click();
 		webDriver.findElement(By.linkText("ヘルプ")).click();
+		assertEquals("ヘルプ | LMS", webDriver.getTitle());
 		assertEquals(help, webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
@@ -85,15 +91,16 @@ public class Case06 {
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
 
-		String originalWindowString = webDriver.getWindowHandle();
+		String originalWindow = webDriver.getWindowHandle();
 		webDriver.findElement(By.linkText("よくある質問")).click();
 		for (String windowHandle : webDriver.getWindowHandles()) {
-			if (!originalWindowString.contentEquals(windowHandle)) {
+			if (!originalWindow.contentEquals(windowHandle)) {
 
 				webDriver.switchTo().window(windowHandle);
 				break;
 			}
 		}
+		assertEquals("よくある質問 | LMS", webDriver.getTitle());
 		assertEquals(faq, webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
