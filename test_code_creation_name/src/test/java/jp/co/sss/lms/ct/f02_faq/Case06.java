@@ -105,13 +105,31 @@ public class Case06 {
 	@DisplayName("テスト05 カテゴリ検索で該当カテゴリの検索結果だけ表示")
 	void test05() {
 
+		webDriver.findElement(By.linkText("【人材開発支援助成金】")).click();
+		assertTrue(webDriver.getCurrentUrl()
+				.contains("http://localhost:8080/lms/faq?frequentlyAskedQuestionCategoryId=2"));
+		getEvidence(new Object() {
+		}, "01");
+		scrollBy("3000");
+		getEvidence(new Object() {
+		}, "02");
+
 	}
 
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 検索結果の質問をクリックしその回答を表示")
 	void test06() {
-		// TODO ここに追加
+		int count = webDriver.findElements(By.tagName("dt")).size();
+
+		for (int i = 0; i < count; i++) {
+			scrollBy("500");
+			webDriver.findElements(By.tagName("dt")).get(i).click();
+		}
+		assertTrue(webDriver.findElement(By.className("table-hover")).getText().contains("A."));
+		getEvidence(new Object() {
+		}, "");
+
 	}
 
 }
