@@ -115,11 +115,9 @@ public class Case06 {
 		webDriver.findElement(By.linkText("【人材開発支援助成金】")).click();
 		assertTrue(webDriver.getCurrentUrl()
 				.contains("http://localhost:8080/lms/faq?frequentlyAskedQuestionCategoryId=2"));
-		getEvidence(new Object() {
-		}, "01");
 		scrollBy("3000");
 		getEvidence(new Object() {
-		}, "02");
+		}, "");
 
 	}
 

@@ -115,12 +115,10 @@ public class Case05 {
 		webDriver.findElement(By.id("form")).sendKeys("事業所");
 		webDriver.findElement(By.cssSelector("input[value='検索']")).click();
 		visibilityTimeout(By.className("table-hover"), 5);
-		getEvidence(new Object() {
-		}, "01");
 		scrollBy("3000");
 		assertTrue(webDriver.findElement(By.className("table-hover")).getText().contains("事業所"));
 		getEvidence(new Object() {
-		}, "02");
+		}, "");
 
 	}
 
