@@ -110,7 +110,7 @@ public class Case05 {
 		visibilityTimeout(By.className("table-hover"), 5);
 		getEvidence(new Object() {
 		}, "01");
-		webDriver.findElement(By.tagName("body")).sendKeys(org.openqa.selenium.Keys.END);
+		scrollBy("3000");
 		assertTrue(webDriver.findElement(By.className("table-hover")).getText().contains("事業所"));
 		getEvidence(new Object() {
 		}, "02");
@@ -122,6 +122,7 @@ public class Case05 {
 	@DisplayName("テスト06 「クリア」ボタン押下で入力したキーワードを消去")
 	void test06() {
 
+		scrollBy("-3000");
 		webDriver.findElement(By.cssSelector("input[value='クリア']")).click();
 		assertEquals("", webDriver.findElement(By.id("form")).getAttribute("value"));
 		getEvidence(new Object() {
