@@ -31,6 +31,8 @@ public class Case07 {
 
 	private String sectionDetail = "http://localhost:8080/lms/section/detail";
 
+	private String reportRegister = "http://localhost:8080/lms/report/regist";
+
 	/** 前処理 */
 	@BeforeAll
 	static void before() {
@@ -101,7 +103,12 @@ public class Case07 {
 	@Order(4)
 	@DisplayName("テスト04 「提出する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
-		// TODO ここに追加
+		webDriver.findElement(By.cssSelector("input[value *= 'を提出する']")).click();
+		assertEquals("レポート登録 | LMS", webDriver.getTitle());
+		assertEquals(reportRegister, webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		}, "");
+
 	}
 
 	@Test
