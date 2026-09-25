@@ -79,6 +79,7 @@ public class Case04 {
 
 		webDriver.findElement(By.className("dropdown-toggle")).click();
 		webDriver.findElement(By.linkText("ヘルプ")).click();
+		assertEquals("ヘルプ | LMS", webDriver.getTitle());
 		assertEquals(help, webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
@@ -99,6 +100,7 @@ public class Case04 {
 				break;
 			}
 		}
+		assertEquals("よくある質問 | LMS", webDriver.getTitle());
 		assertEquals(faq, webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
