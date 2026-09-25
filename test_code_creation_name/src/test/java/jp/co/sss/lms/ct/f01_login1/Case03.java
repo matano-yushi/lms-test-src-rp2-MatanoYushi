@@ -41,8 +41,10 @@ public class Case03 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		webDriver.get(login);
+		goTo(login);
+		assertEquals("ログイン | LMS", webDriver.getTitle());
 		assertEquals(login, webDriver.getCurrentUrl());
+
 		getEvidence(new Object() {
 		}, "");
 
@@ -58,6 +60,8 @@ public class Case03 {
 
 		webDriver.findElement(By.className("btn-primary")).click();
 		visibilityTimeout(By.cssSelector("button.navbar-btn"), 5);
+
+		assertEquals("コース詳細 | LMS", webDriver.getTitle());
 		assertEquals(detail, webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
