@@ -85,10 +85,10 @@ public class Case04 {
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
 
-		String originalWindowString = webDriver.getWindowHandle();
+		String originalWindow = webDriver.getWindowHandle();
 		webDriver.findElement(By.linkText("よくある質問")).click();
 		for (String windowHandle : webDriver.getWindowHandles()) {
-			if (!originalWindowString.contentEquals(windowHandle)) {
+			if (!originalWindow.contentEquals(windowHandle)) {
 
 				webDriver.switchTo().window(windowHandle);
 				break;
