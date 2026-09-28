@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト レポート機能
@@ -24,10 +25,6 @@ public class Case07 {
 	private String detail = "http://localhost:8080/lms/course/detail";
 
 	private String login = "http://localhost:8080/lms/";
-
-	private String faq = "http://localhost:8080/lms/faq";
-
-	private String help = "http://localhost:8080/lms/help";
 
 	private String sectionDetail = "http://localhost:8080/lms/section/detail";
 
@@ -85,12 +82,13 @@ public class Case07 {
 			String text = webDriver.findElements(By.cssSelector(".sctionList tr")).get(i).getText();
 
 			if (text.contains("未提出")) {
-				scrollBy("250");
+				scrollBy("400");
 				webDriver.findElements(By.cssSelector(".sctionList tr")).get(i)
 						.findElement(By.cssSelector("input[value = '詳細']")).click();
 				break;
 			}
 		}
+		visibilityTimeout(By.id("sectionDetail"), 5);
 		assertEquals("セクション詳細 | LMS", webDriver.getTitle());
 		assertEquals(sectionDetail, webDriver.getCurrentUrl());
 
@@ -104,6 +102,7 @@ public class Case07 {
 	@DisplayName("テスト04 「提出する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
 		webDriver.findElement(By.cssSelector("input[value *= 'を提出する']")).click();
+		visibilityTimeout(By.tagName("Legend"), 5);
 		assertEquals("レポート登録 | LMS", webDriver.getTitle());
 		assertEquals(reportRegister, webDriver.getCurrentUrl());
 		getEvidence(new Object() {
@@ -115,7 +114,16 @@ public class Case07 {
 	@Order(5)
 	@DisplayName("テスト05 報告内容を入力して「提出する」ボタンを押下し確認ボタン名が更新される")
 	void test05() {
-		// TODO ここに追加
+
+		WebElement text = webDriver.findElement(By.cssSelector("textarea"));
+		text.clear();
+		text.sendKeys("本日の研修内容");
+		webDriver.findElement(By.cssSelector("button[type = 'submit']")).click();
+		WebElement theckReport = webDriver.findElement(By.cssSelector("input[value *= 'を確認する"));
+		assertTrue(theckReport.getAttribute("value").contains("確認する"));
+		getEvidence(new Object() {
+		}, "");
+
 	}
 
 }
