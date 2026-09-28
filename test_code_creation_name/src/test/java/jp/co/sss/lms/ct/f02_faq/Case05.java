@@ -116,7 +116,8 @@ public class Case05 {
 		webDriver.findElement(By.cssSelector("input[value='検索']")).click();
 		visibilityTimeout(By.className("table-hover"), 5);
 		scrollBy("3000");
-		assertTrue(webDriver.findElement(By.className("table-hover")).getText().contains("事業所"));
+		assertTrue(webDriver.findElement(By.className("table-hover")).getText()
+				.contains("Q.事業所が変わった場合、何かしら手続きをする必要がありますか？"));
 		getEvidence(new Object() {
 		}, "");
 

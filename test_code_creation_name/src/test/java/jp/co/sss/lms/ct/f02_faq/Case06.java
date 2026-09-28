@@ -115,6 +115,13 @@ public class Case06 {
 		webDriver.findElement(By.linkText("【人材開発支援助成金】")).click();
 		assertTrue(webDriver.getCurrentUrl()
 				.contains("http://localhost:8080/lms/faq?frequentlyAskedQuestionCategoryId=2"));
+
+		String anser = webDriver.findElement(By.className("table-hover")).getText();
+
+		assertTrue(anser.contains("Q.セルフ・キャリアドック制度とは何か"));
+		assertTrue(anser.contains("Q.事業所が変わった場合、何かしら手続きをする必要がありますか？"));
+		assertTrue(anser.contains("Q.助成金書類の作成方法が分かりません"));
+
 		scrollBy("3000");
 		getEvidence(new Object() {
 		}, "");
