@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト レポート機能
@@ -24,6 +25,12 @@ public class Case08 {
 	private String login = "http://localhost:8080/lms/";
 
 	private String detail = "http://localhost:8080/lms/course/detail";
+
+	private String sectionDetail = "http://localhost:8080/lms/section/detail";
+
+	private String reportRegister = "http://localhost:8080/lms/report/regist";
+
+	private String userDetail = "http://localhost:8080/lms/user/detail";
 
 	/** 前処理 */
 	@BeforeAll
@@ -72,35 +79,87 @@ public class Case08 {
 	@Order(3)
 	@DisplayName("テスト03 提出済の研修日の「詳細」ボタンを押下しセクション詳細画面に遷移")
 	void test03() {
-		// TODO ここに追加
+		int detail = webDriver.findElements(By.cssSelector(".sctionList tr")).size();
+		for (int i = 0; i < detail; i++) {
+			String text = webDriver.findElements(By.cssSelector(".sctionList tr")).get(i).getText();
+
+			if (text.contains("提出済み")) {
+				webDriver.findElements(By.cssSelector(".sctionList tr")).get(i)
+						.findElement(By.cssSelector("input[value = '詳細']")).click();
+				break;
+			}
+		}
+		visibilityTimeout(By.id("sectionDetail"), 5);
+		assertEquals("セクション詳細 | LMS", webDriver.getTitle());
+		assertEquals(sectionDetail, webDriver.getCurrentUrl());
+
+		getEvidence(new Object() {
+		}, "");
+
 	}
 
 	@Test
 	@Order(4)
 	@DisplayName("テスト04 「確認する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
-		// TODO ここに追加
+		webDriver.findElement(By.cssSelector("input[value *= 'を確認する']")).click();
+		visibilityTimeout(By.tagName("Legend"), 5);
+		assertEquals("レポート登録 | LMS", webDriver.getTitle());
+		assertEquals(reportRegister, webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		}, "");
+
 	}
 
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 報告内容を修正して「提出する」ボタンを押下しセクション詳細画面に遷移")
 	void test05() {
-		// TODO ここに追加
+		WebElement text = webDriver.findElement(By.cssSelector("textarea"));
+		text.clear();
+		text.sendKeys("本日の研修内容を修正しました");
+		webDriver.findElement(By.cssSelector("button[type = 'submit']")).click();
+		visibilityTimeout(By.id("sectionDetail"), 5);
+		assertEquals("セクション詳細 | LMS", webDriver.getTitle());
+		assertEquals("http://localhost:8080/lms/section/detail?sectionId=1", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		}, "");
 	}
 
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 上部メニューの「ようこそ○○さん」リンクからユーザー詳細画面に遷移")
 	void test06() {
-		// TODO ここに追加
+		WebElement user = webDriver.findElement(By.partialLinkText("ようこそ"));
+		user.click();
+		assertEquals("ユーザー詳細", webDriver.getTitle());
+		assertEquals(userDetail, webDriver.getCurrentUrl());
+
+		getEvidence(new Object() {
+		}, "");
+
 	}
 
 	@Test
 	@Order(7)
 	@DisplayName("テスト07 該当レポートの「詳細」ボタンを押下しレポート詳細画面で修正内容が反映される")
 	void test07() {
-		// TODO ここに追加
-	}
+		//テーブル内の行数取得
+		int tableCount = webDriver.findElements(By.cssSelector("table.table-hover tr")).size();
+		for (int i = 0; i < tableCount; i++) {
 
+			String detailButton = webDriver.findElements(By.cssSelector("table.table-hover tr")).get(i).getText();
+			if (detailButton.contains("2022年10月1日(土)")) {
+				scrollBy("800");
+				webDriver.findElements(By.cssSelector("table.table-hover tr")).get(i)
+						.findElement(By.cssSelector("input[value = '詳細']")).click();
+				break;
+			}
+		}
+		visibilityTimeout(By.tagName("h2"), 5);
+		WebElement report = webDriver.findElement(By.cssSelector("h3 + table.table-hover"));
+		assertTrue(report.getText().contains("本日の研修内容を修正しました"));
+		getEvidence(new Object() {
+		}, "");
+	}
 }
