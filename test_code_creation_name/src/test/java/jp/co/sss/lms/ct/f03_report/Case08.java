@@ -83,7 +83,7 @@ public class Case08 {
 		for (int i = 0; i < detail; i++) {
 			String text = webDriver.findElements(By.cssSelector(".sctionList tr")).get(i).getText();
 
-			if (text.contains("提出済み")) {
+			if (text.contains("10月2日") && text.contains("提出済み")) {
 				webDriver.findElements(By.cssSelector(".sctionList tr")).get(i)
 						.findElement(By.cssSelector("input[value = '詳細']")).click();
 				break;
@@ -102,7 +102,8 @@ public class Case08 {
 	@Order(4)
 	@DisplayName("テスト04 「確認する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
-		webDriver.findElement(By.cssSelector("input[value *= 'を確認する']")).click();
+		scrollBy("800");
+		webDriver.findElement(By.cssSelector("input[value *= '週報']")).click();
 		visibilityTimeout(By.tagName("Legend"), 5);
 		assertEquals("レポート登録 | LMS", webDriver.getTitle());
 		assertEquals(reportRegister, webDriver.getCurrentUrl());
@@ -115,13 +116,21 @@ public class Case08 {
 	@Order(5)
 	@DisplayName("テスト05 報告内容を修正して「提出する」ボタンを押下しセクション詳細画面に遷移")
 	void test05() {
-		WebElement text = webDriver.findElement(By.cssSelector("textarea"));
-		text.clear();
-		text.sendKeys("本日の研修内容を修正しました");
+
+		webDriver.findElements(By.cssSelector("textarea")).get(0).clear();
+		webDriver.findElements(By.cssSelector("textarea")).get(0).sendKeys("3");
+
+		webDriver.findElements(By.cssSelector("textarea")).get(1).clear();
+		webDriver.findElements(By.cssSelector("textarea")).get(1).sendKeys("所感の研修内容を修正しました");
+
+		webDriver.findElements(By.cssSelector("textarea")).get(2).clear();
+		webDriver.findElements(By.cssSelector("textarea")).get(2).sendKeys("一週間の振り返りの研修内容を修正しました");
+
+		scrollBy("500");
 		webDriver.findElement(By.cssSelector("button[type = 'submit']")).click();
 		visibilityTimeout(By.id("sectionDetail"), 5);
 		assertEquals("セクション詳細 | LMS", webDriver.getTitle());
-		assertEquals("http://localhost:8080/lms/section/detail?sectionId=1", webDriver.getCurrentUrl());
+		assertEquals("http://localhost:8080/lms/section/detail?sectionId=2", webDriver.getCurrentUrl());
 		getEvidence(new Object() {
 		}, "");
 	}
@@ -149,16 +158,24 @@ public class Case08 {
 		for (int i = 0; i < tableCount; i++) {
 
 			String detailButton = webDriver.findElements(By.cssSelector("table.table-hover tr")).get(i).getText();
-			if (detailButton.contains("2022年10月1日(土)")) {
+			if (detailButton.contains("2022年10月2日(日)")) {
 				scrollBy("800");
 				webDriver.findElements(By.cssSelector("table.table-hover tr")).get(i)
-						.findElement(By.cssSelector("input[value = '詳細']")).click();
+						.findElement(By.cssSelector("input[value = '修正する']")).click();
 				break;
 			}
 		}
 		visibilityTimeout(By.tagName("h2"), 5);
-		WebElement report = webDriver.findElement(By.cssSelector("h3 + table.table-hover"));
-		assertTrue(report.getText().contains("本日の研修内容を修正しました"));
+		String goal = webDriver.findElements(By.cssSelector("textarea")).get(0).getAttribute("value");
+		String Thoughts = webDriver.findElements(By.cssSelector("textarea")).get(1).getAttribute("value");
+		String weekThoughts = webDriver.findElements(By.cssSelector("textarea")).get(2).getAttribute("value");
+		assertTrue(goal.contains("3"));
+		assertTrue(Thoughts.contains("所感の研修内容を修正しました"));
+		assertTrue(weekThoughts.contains("一週間の振り返りの研修内容を修正しました"));
+		scrollBy("200");
+		//画面縮小
+		((org.openqa.selenium.JavascriptExecutor) webDriver)
+				.executeScript("document.body.style.zoom='70%'");
 		getEvidence(new Object() {
 		}, "");
 	}
