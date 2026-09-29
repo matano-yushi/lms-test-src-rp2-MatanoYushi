@@ -161,14 +161,15 @@ public class Case08 {
 			if (detailButton.contains("2022年10月2日(日)")) {
 				scrollBy("800");
 				webDriver.findElements(By.cssSelector("table.table-hover tr")).get(i)
-						.findElement(By.cssSelector("input[value = '修正する']")).click();
+						.findElement(By.cssSelector("input[value = '詳細']")).click();
 				break;
 			}
 		}
 		visibilityTimeout(By.tagName("h2"), 5);
-		String goal = webDriver.findElements(By.cssSelector("textarea")).get(0).getAttribute("value");
-		String Thoughts = webDriver.findElements(By.cssSelector("textarea")).get(1).getAttribute("value");
-		String weekThoughts = webDriver.findElements(By.cssSelector("textarea")).get(2).getAttribute("value");
+		By Xpath = By.xpath("//h3[contains(text(),'報告レポート')]/following-sibling::table//td");
+		String goal = webDriver.findElements(Xpath).get(0).getText();
+		String Thoughts = webDriver.findElements(Xpath).get(1).getText();
+		String weekThoughts = webDriver.findElements(Xpath).get(2).getText();
 		assertTrue(goal.contains("3"));
 		assertTrue(Thoughts.contains("所感の研修内容を修正しました"));
 		assertTrue(weekThoughts.contains("一週間の振り返りの研修内容を修正しました"));
