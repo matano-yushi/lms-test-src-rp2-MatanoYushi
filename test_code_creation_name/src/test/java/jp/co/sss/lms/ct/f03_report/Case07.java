@@ -91,7 +91,10 @@ public class Case07 {
 		visibilityTimeout(By.id("sectionDetail"), 5);
 		assertEquals("セクション詳細 | LMS", webDriver.getTitle());
 		assertEquals(sectionDetail, webDriver.getCurrentUrl());
-
+		//日報未提出テスト要素取得
+		WebElement unsubmitted = webDriver.findElement(By.cssSelector("input[value *= 'を提出する']"));
+		//日報未提出テスト（現時点）
+		assertTrue(unsubmitted.isDisplayed());
 		getEvidence(new Object() {
 		}, "");
 
