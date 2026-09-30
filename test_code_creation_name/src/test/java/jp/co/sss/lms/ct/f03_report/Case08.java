@@ -92,7 +92,11 @@ public class Case08 {
 		visibilityTimeout(By.id("sectionDetail"), 5);
 		assertEquals("セクション詳細 | LMS", webDriver.getTitle());
 		assertEquals(sectionDetail, webDriver.getCurrentUrl());
-
+		//日報提出済みテスト要素取得
+		WebElement submitted = webDriver.findElement(By.cssSelector("input[value *= '確認する']"));
+		//日報提出済みテスト
+		assertTrue(submitted.isDisplayed());
+		scrollBy("200");
 		getEvidence(new Object() {
 		}, "");
 
